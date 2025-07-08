@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodigo - Restaurant & Food Delivery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="food.css">
+   <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-color: #ffa502;
+            --secondary-color: #ffa502;
+            --dark-color: #2f3542;
+            --light-color: #f1f2f6;
+            --success-color: #2ed573;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        section {
+            width: 100%;
+            min-height: 100vh;
+            padding: 100px 0;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 100px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .navbar {
+            display: flex;
+            column-gap: 2rem;
+        }
+
+        .navbar a {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar a::after {
+            content: '';
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .navbar a:hover,
+        .navbar .home-active {
+            color: var(--primary-color);
+        }
+
+        .navbar a:hover::after,
+        .navbar .home-active::after {
+            width: 100%;
+        }
+
+        #menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100001;
+            display: none;
+        }
+
+      
+
+        /* Home Section */
+        #Home {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 100px;
+        }
+
+        .main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .men_text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .men_text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .men_text h1 span {
+            display: block;
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin-top: 10px;
+        }
+
+        .main_btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        
+        .main_image {
+            flex: 1;
+            text-align: right;
+        }
+
+        .main_image img {
+            max-width: 100%;
+            height: auto;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* About Section */
+        .about {
+            background: var(--light-color);
+        }
+
+        .about_main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about_text {
+            flex: 1;
+            padding: 0 50px;
+        }
+
+        .about_text h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .about_text h1 span {
+            color: var(--primary-color);
+        }
+
+        .about_text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .about_text p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .about_btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .about_btn:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+       
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-10px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            header {
+                padding: 20px 50px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .men_text {
+                margin-bottom: 50px;
+                text-align: center;
+            }
+
+            .about_main {
+                flex-direction: column;
+            }
+
+            .about_text {
+                padding: 0;
+                margin-bottom: 50px;
+            }
+
+            .order_main {
+                flex-direction: column;
+            }
+
+            .order_image {
+                margin-bottom: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+
+            #menu-icon {
+                display: block;
+            }
+
+            .navbar {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 50px 0;
+                transition: all 0.5s ease;
+            }
+
+            .navbar.active {
+                left: 0;
+            }
+
+            .navbar a {
+                margin: 15px 0;
+                font-size: 1.2rem;
+            }
+
+            #Home {
+                padding: 100px 20px;
+            }
+
+            .men_text h1 {
+                font-size: 2.5rem;
+            }
+
+            .men_text h1 span {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .menu_box,
+            .gallary_image_box,
+            .review_box,
+            .team_box {
+                grid-template-columns: 1fr;
+            }
+
+            .footer_main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="Home">
+        <header>
+            <a href="#" class="logo">Foodigo</a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+            <ul class="navbar">
+                <a href="#Home" class="home-active">Home</a>
+                <a href="#About">About</a>
+                <a href="#Menu">Menu</a>
+                <a href="#Gallary">Gallery</a>
+                <a href="#Review">Reviews</a>
+                <a href="#Order">Order</a>
+            </ul>
+        </header>
+
+        <div class="main">
+            <div class="men_text">
+                <h1>Delicious Food <span>Delivered To Your Doorstep</span></h1>
+                <p>Experience the finest culinary delights from the comfort of your home. Our chefs prepare each dish with passion and the freshest ingredients.</p>
+                <a href="#Menu" class="main_btn">Explore Menu</a>
+            </div>
+
+            <div class="main_image">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Delicious Food">
+            </div>
+        </div>
+    </section>
+
+    <div class="about" id="About">
+        <div class="about_main">
+            <div class="image">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Our Restaurant">
+            </div>
+
+            <div class="about_text">
+                <h1><span>About</span> Us</h1>
+                <h3>Why Choose Us?</h3>
+                <p>
+                    At Foodigo, we're passionate about delivering exceptional dining experiences. Our journey began with a simple mission: to serve delicious, high-quality food made from the freshest ingredients. Each dish is carefully crafted by our talented chefs who bring creativity and expertise to every plate.
+                </p>
+                <p>
+                    We source our ingredients locally whenever possible, supporting our community while ensuring the highest quality. Our commitment to excellence extends beyond the kitchen - we provide friendly service and a welcoming atmosphere that keeps our customers coming back.
+                </p>
+                <a href="#Menu" class="about_btn">Our Menu</a>
+            </div>
+        </div>
+    </div>
+
+      <!--Menu-->
+
+    <div class="menu" id="Menu">
+        <h1>Our<span>Menu</span></h1>
+
+        <div class="menu_box">
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/Burger.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>Burger</h2>
+                    <p>
+                      Savor the juicy, flavorful bliss of a classic burger.
+                    </p>
+                    <h3>₹250</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+            
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/pasta.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>pasta</h2>
+                    <p>
+                       Indulge in the savory delight of pasta perfection.
+                    </p>
+                    <h3>₹600</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/lasagna.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>lasagna</h2>
+                    <p>
+                        Indulge in layers of savory goodness with our mouthwatering lasagna.
+                    </p>
+                    <h3>₹900</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+<div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/pizza.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>pizza</h2>
+                    <p>
+                         A cheesy delight with a crispy crust, perfect for any occasion.
+                    </p>
+                    <h3>₹300</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/chocolate juse.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>chocolate juse</h2>
+                    <p>
+                        A decadent delight, blending rich cocoa with creamy indulgence for a heavenly sip of sweetness.
+                    </p>
+                    <h3>₹50</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+
+            
+
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/Beetroot juse.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>Beetroot juse</h2>
+                    <p>
+                       A vibrant and refreshing drink packed with nutrients, offering a unique blend of earthy sweetness.
+                    </p>
+                    <h3>₹80</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/Friut Juse.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>Friut Juse</h2>
+                    <p>
+                      Nature's essence in a glass, brimming with vitamins and freshness for a revitalizing experience.
+
+                    </p>
+                    <h3>₹50</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/green leaves juce.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>green leaves juce</h2>
+                    <p>
+                     Flavorful rice dish with aromatic spices and tender meat/veggies, a culinary delight.
+                    </p>
+                    <h3>₹80</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/Chocolate.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>Chocolate</h2>
+                    <p>
+                        Bite-sized bursts of cocoa-rich delight, perfect for a quick chocolate fix or adding a touch of sweetness to your favorite recipes.
+                    </p>
+                    <h3>₹150</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/ice-cream.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>Ice Cream</h2>
+                    <p>
+                       Creamy, cool indulgence in every scoop, offering a delightful escape from the summer heat or a sweet treat any time of year.
+
+                    </p>
+                    <h3>₹70</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/Spanchi.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>Spanchi</h2>
+                    <p>
+                        Delightful Cupcake Varieties,
+Indulge in Sweet Bliss
+                    </p>
+                    <h3>₹150</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+
+            <div class="menu_card">
+
+                <div class="menu_image">
+                    <img src="image/Sandwich.jpg">
+                </div>
+
+                <div class="small_card">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="menu_info">
+                    <h2>Sandwich</h2>
+                    <p>
+                       Sandwiches offer endless possibilities, from simple ham and cheese to gourmet creations, satisfying hunger with each delicious bite.
+
+                    </p>
+                    <h3>₹150</h3>
+                    <div class="menu_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <a href="#" class="menu_btn">Order Now</a>
+                </div>
+
+            </div> 
+            
+        </div>
+
+    </div>
+
+
+
+
+    <!--Gallary-->
+
+    <div class="gallary" id="Gallary">
+        <h1>Our<span>Gallary</span></h1>
+
+        <div class="gallary_image_box">
+            <div class="gallary_image">
+                <img src="image/Authentic indian rice food.jpg">
+
+                <h3>Authentic indian rice food</h3>
+                <p>
+                     Aromatic and flavorful, a quintessential Indian dish that tantalizes the taste buds with its rich blend of spices and textures.
+                </p>
+                <a href="#" class="gallary_btn">Order Now</a>
+            </div>
+
+            <div class="gallary_image">
+                <img src="image/white cocconat rice.jpg">
+
+                <h3>white cocconat rice </h3>
+                <p>
+                   
+                </p>
+                <a href="#" class="gallary_btn">Order Now</a>
+            </div>
+
+            <div class="gallary_image">
+                <img src="image/dishes and snacks.jpg">
+
+                <h3>dishes and snacks</h3>
+                <p>
+                    Authentic Indian dishes and snacks
+                </p>
+                <a href="#" class="gallary_btn">Order Now</a>
+            </div>
+
+            <div class="gallary_image">
+                <img src="image/Indian foods.jpg">
+
+                <h3>Indian Foods</h3>
+                <p>
+                    
+                </p>
+                <a href="#" class="gallary_btn">Order Now</a>
+            </div>
+
+            <div class="gallary_image">
+                <img src="image/Chicken tikka masala.jpg">
+
+                <h3>Chicken tikka masala</h3>
+                <p>
+                    Chicken tikka masala Indian traditional spicy meet food and rice
+                </p>
+                <a href="#" class="gallary_btn">Order Now</a>
+            </div>
+
+            <div class="gallary_image">
+                <img src="image/cauliflower Rice and checken.jpg">
+
+                <h3>cauliflower Rice</h3>
+                <p>
+                     cauliflower Rice and checken Breast Low sugar plate
+                </p>
+                <a href="#" class="gallary_btn">Order Now</a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!--Review-->
+
+    <div class="review" id="Review">
+        <h1>Customer<span>Review</span></h1>
+
+        <div class="review_box">
+            <div class="review_card">
+
+                <div class="review_profile">
+                    <img src="image/phto/santh.jpg">
+                </div>
+
+                <div class="review_text">
+                    <h2 class="name">SriSanth</h2>
+
+                    <div class="review_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+
+                   
+                    <p>"This website impressed me with its sleek design and wide selection of dishes. Ordering was effortless, 
+					and my food arrived promptly, exceeding my expectations. With excellent customer service, it's become my go-to 
+                    platform for delicious meals delivered to my doorstep."   </p>
+
+                </div>
+
+            </div>
+
+            <div class="review_card">
+
+                <div class="review_profile">
+                    <img src="image/phto/vikash.jpg">
+                </div>
+
+                <div class="review_text">
+                    <h2 class="name">Vikash</h2>
+
+                    <div class="review_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+
+                    <div class="review_social">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </div>
+
+                    <p>
+                      "From its sleek design to its diverse menu, this website captivated me. Ordering was seamless, 
+					  and my food arrived promptly, surpassing my expectations. With top-notch customer service,
+					  it's my preferred choice for convenient, satisfying meals."
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="review_card">
+
+                <div class="review_profile">
+                    <img src="image/phto/yuva.png">
+                </div>
+
+                <div class="review_text">
+                    <h2 class="name">Yuvaraj</h2>
+
+                    <div class="review_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                    </div>
+
+                    <div class="review_social">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </div>
+
+                    <p>
+                        "Effortless ordering, prompt delivery, and a vast menu selection make this website my top choice for delicious meals.
+						The sleek design and excellent customer service enhance the overall experience, earning my full recommendation."
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="review_card">
+
+                <div class="review_profile">
+                    <img src="image/phto/dheena.jpg">
+                </div>
+
+                <div class="review_text">
+                    <h2 class="name">Dheena</h2>
+
+                    <div class="review_icon">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+
+                    <div class="review_social">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </div>
+
+                    <p>
+                       "From easy navigation to a diverse menu, this website ticks all the boxes. With quick deliveries and exceptional service, 
+					   it's my ultimate go-to for satisfying cravings.
+					   Highly recommended for foodies seeking convenience and variety!"
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!--Order-->
+
+    <div class="order" id="Order">
+        <h1><span>Order</span>Now</h1>
+
+        <div class="order_main">
+
+            <div class="order_image">
+                <img src="image/Order now.jpg">
+            </div>
+
+            <form action="#">
+
+                <div class="input">
+                    <p>Name</p>
+                    <input type="text" placeholder="you name">
+                </div>
+
+                <div class="input">
+                    <p>Email</p>
+                    <input type="email" placeholder="you email">
+                </div>
+
+                <div class="input">
+                    <p>Number</p>
+                    <input placeholder="you number">
+                </div>
+
+                <div class="input">
+                    <p>How Much</p>
+                    <input type="number" placeholder="how many order">
+                </div>
+
+                <div class="input">
+                    <p>You Order</p>
+                    <input placeholder="food name">
+                </div>
+
+                <div class="input">
+                    <p>Address</p>
+                    <input placeholder="you Address">
+                </div>
+
+                <a href="https://www.swiggy.com/collections/83656?collection_id=83656&tags=layout_CCS_Cake&type=rcv2" class="order_btn">Order Now</a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!--Team-->
+
+    <div class="team">
+        <h1>Our<span>Team</span></h1>
+
+        <div class="team_box">
+            <div class="profile">
+                <img src="image/phto/vishal.jpg">
+
+                <div class="info">
+                    <h2 class="name">Chief Vishal</h2>
+                    <p class="bio">Hey I'm Vishal, a passionate chef dedicated to creating delicious dishes.</p>
+
+                    <div class="team_icon">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="profile">
+                <img src="image/phto/sree.jpg">
+
+                <div class="info">
+                    <h2 class="name">Chief Sreedhar</h2>
+                    <p class="bio">Hey I'm Sreedhar, a culinary artist with a flair for creating exquisite dishes.</p>
+
+                    <div class="team_icon">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="profile">
+                <img src="image/phto/deepak.jpg">
+
+                <div class="info">
+                    <h2 class="name">Chief Deepak</h2>
+                    <p class="bio">Hey I'm Deepak, a culinary expert with a passion for creating mouthwatering dishes.</p>
+
+                    <div class="team_icon">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="profile">
+                <img src="image/phto/sakthi.jpg">
+
+                <div class="info">
+                    <h2 class="name">Chief Sakthi</h2>
+                    <p class="bio">Hey, I'm Sakthi, a passionate chef dedicated to creating delicious dishes.</p>
+
+                    <div class="team_icon">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!--Footer-->
+
+    <footer>
+        <div class="footer_main">
+
+            <div class="footer_tag">
+                <h2>Location</h2>
+                <p>Chennai</p>
+                <p>Delhi</p>
+                <p>Selam</p>
+                <p>Tiruppur</p>
+                <p>Madurai</p>
+            </div>
+
+            <div class="footer_tag">
+                <h2>Quick Link</h2>
+                <p>Home</p>
+                <p>Food</p>
+                <p>Hotel</p>
+                <p>About</p>
+                <p>Transportation</p>
+            </div>
+
+            <div class="footer_tag">
+                <h2>Contact</h2>
+                <p>+91-9345457411</p>
+                <p>triptraverse462@gmail.com</p>
+                <p>v.vishal122005@gmail.com</p>
+            </div>
+
+            <div class="footer_tag">
+                <h2>Our Services</h2>
+                <p>Trip Traverse</p>
+                <p>Hotel</p>
+                <p>Food Order</p>
+                <p>Affortabel Transportation</p>
+                <p>24 x 7 Service</p>
+            </div>
+
+			 <div class="footer_tag">
+			  <h2>Follows</h2>
+    
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    
+</div>
+
+        </div>
+
+        <p class="end">Design by<span><i class="fa-solid fa-face-grin"></i> Vishal</span></p>
+
+    </footer>
+
+     <script>
+        // Mobile Menu Toggle
+        const menuIcon = document.getElementById('menu-icon');
+        const navbar = document.querySelector('.navbar');
+
+        menuIcon.addEventListener('click', () => {
+            navbar.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('click', () => {
+                navbar.classList.remove('active');
+            });
+        });
+
+        // Sticky Header on Scroll
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('sticky', window.scrollY > 0);
+        });
+
+        // Contact Support Button Functionality
+        const helpBtn = document.getElementById('helpBtn');
+        const contactPopup = document.getElementById('contactPopup');
+        const contactForm = document.getElementById('contactForm');
+        const popupSuccess = document.getElementById('popupSuccess');
+
+        helpBtn.addEventListener('click', () => {
+            contactPopup.style.display = contactPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        contactForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(contactForm);
+            const name = formData.get('name').trim();
+            const email = formData.get('email').trim();
+            const message = formData.get('message').trim();
+
+            if (!name || !email || !message) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: contactForm.method,
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    contactForm.reset();
+                    contactPopup.style.display = 'none';
+                    popupSuccess.style.display = 'block';
+                    setTimeout(() => {
+                        popupSuccess.style.display = 'none';
+                    }, 4000);
+                } else {
+                    alert("There was an error sending your message. Please try again.");
+                }
+            } catch (err) {
+                alert("Network error. Please check your connection.");
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
